@@ -1,7 +1,10 @@
+import { UnitSystem, useSettingsStore } from '@/src/state/settingsStore';
 import { Feather } from '@expo/vector-icons';
-import { Pressable, Text, View } from 'react-native';
+import { Pressable, Text, TouchableOpacity, View } from 'react-native';
 
 export default function SettingsScreen() {
+  const setUnitSystem = useSettingsStore((s) => s.setUnitSystem);
+
   return (
     <View className="flex-1 bg-[#eaf6fb] px-4 pt-16">
       {/* Header */}
@@ -62,8 +65,18 @@ export default function SettingsScreen() {
                 <Text className="text-sm text-[#1793c6] opacity-70">Customize your shortcuts</Text>
               </View>
             </View>
-            <View className="flex-row items-center">
-              <Feather name="chevron-right" size={20} color="#1793c6" />
+            <View >
+              {['metric', 'imperial'].map(u => (
+                <TouchableOpacity
+                  key={u}
+                  onPress={() => setUnitSystem(u as UnitSystem)}
+
+                >
+                  <Text >
+                    {u === 'metric' ? 'Metric' : 'Imperial'}
+                  </Text>
+                </TouchableOpacity>
+              ))}
             </View>
           </View>
         </Pressable>
