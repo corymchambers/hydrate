@@ -1,3 +1,5 @@
+import WaterDrop from '@/components/WaterDrop';
+import WaterGoalAnimation from '@/components/WaterGoalAnimation';
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Pressable, Text, View } from 'react-native';
 
@@ -6,19 +8,15 @@ export default function HomeScreen() {
     <View className="flex-1 bg-[#eaf6fb] px-4 pt-16">
       {/* Header */}
       <View className="items-center mb-6">
-        <Text className="text-4xl font-bold text-[#1793c6] mb-1">💧 Hydrate</Text>
+        <View className="flex-row gap-2 items-center">
+          <WaterDrop />
+          <Text className="text-4xl font-bold text-[#1793c6] mb-1">Hydrate</Text>
+        </View>
         <Text className="text-base text-[#1793c6]">Sunday, June 29</Text>
       </View>
 
       {/* Progress Circle Placeholder */}
-      <View className="items-center justify-center mb-6">
-        <View className="w-56 h-56 rounded-full border-8 border-[#1793c6] border-t-[#eaf6fb] items-center justify-center bg-[#d2f0fa] opacity-80">
-          <MaterialCommunityIcons name="water" size={32} color="#1793c6" style={{ marginBottom: 8 }} />
-          <Text className="text-3xl font-bold text-[#1793c6]">750ml</Text>
-          <Text className="text-base text-[#1793c6]">of 2000ml goal</Text>
-          <Text className="text-xl font-semibold text-[#1793c6] mt-2">38%</Text>
-        </View>
-      </View>
+      <WaterGoalAnimation currentMl={500} goalMl={1000} />
 
       {/* Stats Row */}
       <View className="flex-row justify-between mb-6">
