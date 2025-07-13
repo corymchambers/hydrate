@@ -43,7 +43,8 @@
     "tailwindcss": "^3.4.17",
     "zustand": "^5.0.6",
     "@react-native-async-storage/async-storage": "2.1.2",
-    "expo-localization": "~16.1.6"
+    "expo-localization": "~16.1.6",
+    "expo-sqlite": "~15.2.14"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
