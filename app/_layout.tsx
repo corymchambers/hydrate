@@ -49,6 +49,11 @@ async function migrateDbIfNeeded(db: SQLiteDatabase) {
       );
   ` );
 
+    await db.execAsync(`
+      INSERT INTO goal_history (id, changed_at, goal_ml) 
+      VALUES (1, ${Date.now()}, 3000);
+    `);
+
     currentDbVersion = 1;
 
   }
