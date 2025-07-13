@@ -28,7 +28,6 @@ async function migrateDbIfNeeded(db: SQLiteDatabase) {
   if (!version) return;
 
   let currentDbVersion = version.user_version;
-  console.log(DATABASE_VERSION, currentDbVersion)
   // Only run code if version has been updated.
   if (currentDbVersion >= DATABASE_VERSION) {
     return;

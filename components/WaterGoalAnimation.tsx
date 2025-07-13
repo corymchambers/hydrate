@@ -1,11 +1,21 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { Animated, StyleSheet, Text, View } from 'react-native';
 import Svg, { Circle, ClipPath, Defs, G, LinearGradient, Path, Stop } from 'react-native-svg';
 import WaterDrop from './WaterDrop';
 
-const WaterGoalAnimation = ({ currentML = 750, goalML = 2000 }) => {
-  const percentage = Math.min((currentML / goalML) * 100, 100);
-  const progressAngle = (percentage / 100) * 360;
+const WaterGoalAnimation = ({ currentAmount = 750, goalAmount = 2000 }) => {
+  const percentage = Math.min((currentAmount / goalAmount) * 100, 100);
+
+  // Animated value for progress
+  const animatedProgress = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.timing(animatedProgress, {
+      toValue: percentage,
+      duration: 1000,
+      useNativeDriver: false,
+    }).start();
+  }, [percentage]);
 
   // Circle dimensions
   const size = 300;
@@ -23,6 +33,8 @@ const WaterGoalAnimation = ({ currentML = 750, goalML = 2000 }) => {
   };
 
   const createArcPath = (x, y, radius, startAngle, endAngle) => {
+    if (endAngle <= 0) return '';
+
     const start = polarToCartesian(x, y, radius, endAngle);
     const end = polarToCartesian(x, y, radius, startAngle);
     const largeArcFlag = endAngle - startAngle <= 180 ? '0' : '1';
@@ -33,7 +45,18 @@ const WaterGoalAnimation = ({ currentML = 750, goalML = 2000 }) => {
     ].join(' ');
   };
 
-  const progressPath = createArcPath(center, center, radius, 0, progressAngle);
+  // Use animated value to create progress path
+  const [currentProgressAngle, setCurrentProgressAngle] = React.useState(0);
+
+  React.useEffect(() => {
+    const listener = animatedProgress.addListener(({ value }) => {
+      setCurrentProgressAngle((value / 100) * 360);
+    });
+
+    return () => animatedProgress.removeListener(listener);
+  }, []);
+
+  const progressPath = createArcPath(center, center, radius, 0, currentProgressAngle);
 
   // Calculate water fill height - should fill from bottom of circle
   const waterFillPercentage = percentage / 100;
@@ -80,7 +103,7 @@ const WaterGoalAnimation = ({ currentML = 750, goalML = 2000 }) => {
               />
             </G>
 
-            {/* Progress arc */}
+            {/* Animated Progress arc */}
             <Path
               d={progressPath}
               stroke="#4A90A4"
@@ -97,11 +120,11 @@ const WaterGoalAnimation = ({ currentML = 750, goalML = 2000 }) => {
             </View>
 
             <View style={styles.amountContainer}>
-              <Text style={styles.currentAmount}>{currentML}</Text>
+              <Text style={styles.currentAmount}>{currentAmount}</Text>
               <Text style={styles.unit}>ml</Text>
             </View>
 
-            <Text style={styles.goalText}>of {goalML}ml goal</Text>
+            <Text style={styles.goalText}>of {goalAmount}ml goal</Text>
 
             {/* Percentage inside circle */}
             <Text style={styles.percentageText}>{Math.round(percentage)}%</Text>
