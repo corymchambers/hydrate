@@ -9,6 +9,7 @@ export default function HomeScreen() {
   const db = useSQLiteContext();
   const [currentAmount, setCurrentAmount] = useState<number | null>(null);
   const [goalAmount, setGoalAmount] = useState<number | null>(null);
+  const [currentStreak, setCurrentStreak] = useState<number | null>(null);
 
   useEffect(() => {
     loadData();
@@ -17,7 +18,8 @@ export default function HomeScreen() {
   const loadData = async () => {
     await Promise.all([
       loadDailyGoal(),
-      loadTodayWaterIntake()
+      loadTodayWaterIntake(),
+      loadCurrentStreak()
     ]);
   };
 
@@ -57,14 +59,76 @@ export default function HomeScreen() {
     }
   };
 
+  const getDailyGoalForDate = async (date: Date): Promise<number> => {
+    try {
+      // Get the goal that was active on this date
+      const result = await db.getFirstAsync<{ goal_ml: number }>(
+        'SELECT goal_ml FROM goal_history WHERE changed_at <= ? ORDER BY changed_at DESC LIMIT 1',
+        [date.getTime()]
+      );
+      return result?.goal_ml || 2000;
+    } catch (error) {
+      console.error('Error getting goal for date:', error);
+      return 2000;
+    }
+  };
+
+  const getDailyTotal = async (date: Date): Promise<number> => {
+    try {
+      const startOfDay = new Date(date);
+      startOfDay.setHours(0, 0, 0, 0);
+      const endOfDay = new Date(date);
+      endOfDay.setHours(23, 59, 59, 999);
+
+      const result = await db.getFirstAsync<{ total: number }>(
+        'SELECT COALESCE(SUM(amount_ml), 0) as total FROM water_log WHERE drank_at >= ? AND drank_at <= ?',
+        [startOfDay.getTime(), endOfDay.getTime()]
+      );
+
+      return result?.total || 0;
+    } catch (error) {
+      console.error('Error getting daily total:', error);
+      return 0;
+    }
+  };
+
+  const loadCurrentStreak = async () => {
+    try {
+      let streak = 0;
+      const today = new Date();
+
+      // Check backwards from today until we find a day that didn't meet the goal
+      for (let i = 0; i < 365; i++) { // Max 365 days to prevent infinite loop
+        const checkDate = new Date(today);
+        checkDate.setDate(today.getDate() - i);
+
+        const dailyTotal = await getDailyTotal(checkDate);
+        const goalForDate = await getDailyGoalForDate(checkDate);
+
+        if (dailyTotal >= goalForDate) {
+          streak++;
+        } else {
+          break; // Streak broken
+        }
+      }
+
+      setCurrentStreak(streak);
+    } catch (error) {
+      console.error('Error calculating current streak:', error);
+    }
+  };
+
   const addWater = async (amount: number) => {
     try {
       await db.runAsync(
         'INSERT INTO water_log (drank_at, amount_ml) VALUES (?, ?)',
         [Date.now(), amount]
       );
-      // Reload today's water intake after adding
-      await loadTodayWaterIntake();
+      // Reload today's water intake and potentially streak after adding
+      await Promise.all([
+        loadTodayWaterIntake(),
+        loadCurrentStreak() // Recalculate streak in case today's goal was just met
+      ]);
     } catch (error) {
       console.error('Error adding water:', error);
     }
@@ -79,7 +143,7 @@ export default function HomeScreen() {
     : null;
 
   // Don't render until data is loaded
-  if (currentAmount === null || goalAmount === null) {
+  if (currentAmount === null || goalAmount === null || currentStreak === null) {
     return (
       <View className="flex-1 bg-[#eaf6fb] justify-center items-center">
         <Text className="text-[#1793c6] text-lg">Loading...</Text>
@@ -115,7 +179,7 @@ export default function HomeScreen() {
         </View>
         <View className="flex-1 items-center bg-white rounded-xl py-4 mx-1 shadow">
           <Feather name="calendar" size={24} color="#1793c6" />
-          <Text className="text-xl font-bold text-[#1793c6]">5</Text>
+          <Text className="text-xl font-bold text-[#1793c6]">{currentStreak}</Text>
           <Text className="text-xs text-[#1793c6]">day streak</Text>
         </View>
       </View>
