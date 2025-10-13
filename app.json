@@ -13,6 +13,7 @@
       "bundleIdentifier": "com.corymchambers1.hydrate"
     },
     "android": {
+      "package": "com.corymchambers1.hydrate",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -40,6 +41,12 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "efc87154-752b-40f7-ab4a-0996fc5abb76"
+      }
     }
   }
 }

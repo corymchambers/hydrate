@@ -3,7 +3,7 @@ import WaterGoalAnimation from '@/components/WaterGoalAnimation';
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useSQLiteContext } from 'expo-sqlite';
 import { useEffect, useState } from 'react';
-import { Pressable, Text, View } from 'react-native';
+import { Pressable, ScrollView, Text, View } from 'react-native';
 
 export default function HomeScreen() {
   const db = useSQLiteContext();
@@ -163,7 +163,7 @@ export default function HomeScreen() {
   }
 
   return (
-    <View className="flex-1 bg-[#eaf6fb] px-4 pt-16">
+    <ScrollView className="flex-1 bg-[#eaf6fb] px-4 pt-16">
       {/* Header */}
       <View className="items-center mb-6">
         <View className="flex-row gap-2 items-center">
@@ -232,6 +232,6 @@ export default function HomeScreen() {
           <Text className="text-white font-bold">1L</Text>
         </Pressable>
       </View>
-    </View>
+    </ScrollView>
   );
 }
