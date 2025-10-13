@@ -1,4 +1,5 @@
 import '@/global.css';
+import { Feather } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
 import { SQLiteProvider, type SQLiteDatabase } from 'expo-sqlite';
 import { Suspense } from 'react';
@@ -12,10 +13,42 @@ export default function RootLayout() {
         databaseName="hydrate.db"
         onInit={migrateDbIfNeeded}
       >
-        <Tabs>
-          <Tabs.Screen name="index" options={{ title: 'Home', headerShown: false }} />
-          <Tabs.Screen name="history" options={{ title: 'History', headerShown: false }} />
-          <Tabs.Screen name="settings" options={{ title: 'Settings', headerShown: false }} />
+        <Tabs
+          screenOptions={{
+            tabBarActiveTintColor: '#1793c6',
+            tabBarInactiveTintColor: '#7eb3c9',
+          }}
+        >
+          <Tabs.Screen
+            name="index"
+            options={{
+              title: 'Home',
+              headerShown: false,
+              tabBarIcon: ({ color, size }) => (
+                <Feather name="home" size={size} color={color} />
+              ),
+            }}
+          />
+          <Tabs.Screen
+            name="history"
+            options={{
+              title: 'History',
+              headerShown: false,
+              tabBarIcon: ({ color, size }) => (
+                <Feather name="calendar" size={size} color={color} />
+              ),
+            }}
+          />
+          <Tabs.Screen
+            name="settings"
+            options={{
+              title: 'Settings',
+              headerShown: false,
+              tabBarIcon: ({ color, size }) => (
+                <Feather name="settings" size={size} color={color} />
+              ),
+            }}
+          />
         </Tabs></SQLiteProvider></Suspense>
   );
 }

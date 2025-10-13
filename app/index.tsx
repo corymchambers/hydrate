@@ -11,6 +11,17 @@ export default function HomeScreen() {
   const [goalAmount, setGoalAmount] = useState<number | null>(null);
   const [currentStreak, setCurrentStreak] = useState<number | null>(null);
 
+  // Get current date formatted as "Monday, January 1"
+  const getCurrentDate = () => {
+    const today = new Date();
+    const options: Intl.DateTimeFormatOptions = {
+      weekday: 'long',
+      month: 'long',
+      day: 'numeric'
+    };
+    return today.toLocaleDateString('en-US', options);
+  };
+
   useEffect(() => {
     loadData();
   }, []);
@@ -159,7 +170,7 @@ export default function HomeScreen() {
           <WaterDrop />
           <Text className="text-4xl font-bold text-[#1793c6] mb-1">Hydrate</Text>
         </View>
-        <Text className="text-base text-[#1793c6]">Sunday, June 29</Text>
+        <Text className="text-base text-[#1793c6]">{getCurrentDate()}</Text>
       </View>
 
       {/* Progress Circle */}
