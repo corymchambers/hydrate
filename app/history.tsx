@@ -1,3 +1,7 @@
+import { useSettingsStore } from '@/src/state/settingsStore';
+import {
+  formatVolume
+} from '@/src/utils/conversions';
 import { Feather } from '@expo/vector-icons';
 import { useSQLiteContext } from 'expo-sqlite';
 import { useEffect, useState } from 'react';
@@ -20,6 +24,7 @@ type TimePeriod = 'week' | 'month' | 'year' | 'ytd';
 
 export default function HistoryScreen() {
   const db = useSQLiteContext();
+  const unitSystem = useSettingsStore((s) => s.unitSystem);
   const [weeklyAverage, setWeeklyAverage] = useState<number | null>(null);
   const [currentStreak, setCurrentStreak] = useState<number | null>(null);
   const [todayActivity, setTodayActivity] = useState<ActivityEntry[]>([]);
@@ -36,17 +41,17 @@ export default function HistoryScreen() {
 
   const handlePeriodSelection = async (period: TimePeriod) => {
     if (isPeriodLoading) return;
-
+    
     setIsPeriodLoading(true);
     setSelectedPeriod(period);
-
+    
     try {
       const dates = getDateRange(period);
       const dayDataPromises = dates.map(async (date): Promise<DayData> => {
         const total = await getDailyTotal(date);
         const goal = await getDailyGoalForDate(date);
         const percentage = goal > 0 ? Math.round((total / goal) * 100) : 0;
-
+        
         return {
           date,
           total,
@@ -167,7 +172,7 @@ export default function HistoryScreen() {
         const total = await getDailyTotal(date);
         const goal = await getDailyGoalForDate(date);
         const percentage = goal > 0 ? Math.round((total / goal) * 100) : 0;
-
+        
         return {
           date,
           total,
@@ -194,8 +199,8 @@ export default function HistoryScreen() {
   };
 
   const formatDate = (date: Date): string => {
-    return date.toLocaleDateString('en-US', {
-      month: 'short',
+    return date.toLocaleDateString('en-US', { 
+      month: 'short', 
       day: 'numeric',
       year: selectedPeriod === 'year' || selectedPeriod === 'ytd' ? 'numeric' : undefined
     });
@@ -205,7 +210,7 @@ export default function HistoryScreen() {
     const today = new Date();
     const yesterday = new Date(today);
     yesterday.setDate(today.getDate() - 1);
-
+    
     if (date.toDateString() === today.toDateString()) {
       return 'Today';
     } else if (date.toDateString() === yesterday.toDateString()) {
@@ -235,7 +240,7 @@ export default function HistoryScreen() {
         'SELECT COALESCE(SUM(amount_ml), 0) as total FROM water_log WHERE drank_at >= ? AND drank_at <= ?',
         [startOfDay.getTime(), endOfDay.getTime()]
       );
-
+      
       return result?.total || 0;
     } catch (error) {
       console.error('Error getting daily total:', error);
@@ -248,22 +253,22 @@ export default function HistoryScreen() {
       const dailyGoal = await getDailyGoalForDate(new Date());
       let streak = 0;
       const today = new Date();
-
+      
       // Check backwards from today until we find a day that didn't meet the goal
       for (let i = 0; i < 365; i++) { // Max 365 days to prevent infinite loop
         const checkDate = new Date(today);
         checkDate.setDate(today.getDate() - i);
-
+        
         const dailyTotal = await getDailyTotal(checkDate);
         const goalForDate = await getDailyGoalForDate(checkDate);
-
+        
         if (dailyTotal >= goalForDate) {
           streak++;
         } else {
           break; // Streak broken
         }
       }
-
+      
       setCurrentStreak(streak);
     } catch (error) {
       console.error('Error calculating current streak:', error);
@@ -275,20 +280,20 @@ export default function HistoryScreen() {
       const today = new Date();
       let totalPercentage = 0;
       let totalDays = 0;
-
+      
       // Check the last 7 days and calculate average percentage
       for (let i = 0; i < 7; i++) {
         const checkDate = new Date(today);
         checkDate.setDate(today.getDate() - i);
-
+        
         const dailyTotal = await getDailyTotal(checkDate);
         const goalForDate = await getDailyGoalForDate(checkDate);
         const percentage = goalForDate > 0 ? Math.round((dailyTotal / goalForDate) * 100) : 0;
-
+        
         totalPercentage += percentage;
         totalDays++;
       }
-
+      
       const average = totalDays > 0 ? Math.round(totalPercentage / totalDays) : 0;
       setWeeklyAverage(average);
     } catch (error) {
@@ -298,10 +303,10 @@ export default function HistoryScreen() {
 
   const formatTime = (timestamp: number): string => {
     const date = new Date(timestamp);
-    return date.toLocaleTimeString('en-US', {
-      hour: 'numeric',
+    return date.toLocaleTimeString('en-US', { 
+      hour: 'numeric', 
       minute: '2-digit',
-      hour12: true
+      hour12: true 
     });
   };
 
@@ -312,6 +317,10 @@ export default function HistoryScreen() {
 
   const getActivityType = (amount: number) => {
     return amount < 400 ? 'Coffee' : 'Water';
+  };
+
+  const formatActivityAmount = (amountMl: number): string => {
+    return formatVolume(amountMl, unitSystem || 'metric');
   };
 
   // Show loading state if data isn't loaded yet
@@ -360,7 +369,7 @@ export default function HistoryScreen() {
         {/* Today's Activity Card */}
         <View className="bg-white rounded-xl p-6 shadow mb-6">
           <Text className="text-xl font-bold text-[#2c3e50] mb-4">Today's Activity</Text>
-
+          
           {todayActivity.length === 0 ? (
             <Text className="text-[#7b8794] text-center py-4">No activity today</Text>
           ) : (
@@ -369,17 +378,17 @@ export default function HistoryScreen() {
                 <View key={activity.id} className="flex-row items-center">
                   {/* Icon */}
                   <View className="bg-[#e3f2fd] rounded-full p-3 mr-4">
-                    <Feather
-                      name={getActivityIcon(activity.amount_ml)}
-                      size={20}
-                      color="#1793c6"
+                    <Feather 
+                      name={getActivityIcon(activity.amount_ml)} 
+                      size={20} 
+                      color="#1793c6" 
                     />
                   </View>
-
+                  
                   {/* Activity Details */}
                   <View className="flex-1">
                     <Text className="text-lg font-semibold text-[#2c3e50]">
-                      {activity.amount_ml}ml {getActivityType(activity.amount_ml)}
+                      {formatActivityAmount(activity.amount_ml)} {getActivityType(activity.amount_ml)}
                     </Text>
                     <Text className="text-sm text-[#7b8794]">{formatTime(activity.drank_at)}</Text>
                   </View>
@@ -398,7 +407,7 @@ export default function HistoryScreen() {
               <Text className="text-[#1793c6] mt-2 font-medium">Loading data...</Text>
             </View>
           )}
-
+          
           {/* Period Selector */}
           <View className="mb-4">
             <Text className="text-xl font-bold text-[#2c3e50] mb-3">Analysis</Text>
@@ -408,20 +417,22 @@ export default function HistoryScreen() {
                   key={period}
                   onPress={() => handlePeriodSelection(period)}
                   disabled={isPeriodLoading}
-                  className={`flex-1 py-2 px-3 mx-1 rounded-lg ${selectedPeriod === period
-                      ? 'bg-[#1793c6]'
+                  className={`flex-1 py-2 px-3 mx-1 rounded-lg ${
+                    selectedPeriod === period 
+                      ? 'bg-[#1793c6]' 
                       : 'bg-[#f0f0f0]'
-                    }`}
+                  }`}
                 >
-                  <Text
-                    className={`text-center text-sm font-medium ${selectedPeriod === period
-                        ? 'text-white'
+                  <Text 
+                    className={`text-center text-sm font-medium ${
+                      selectedPeriod === period 
+                        ? 'text-white' 
                         : 'text-[#7b8794]'
-                      }`}
+                    }`}
                   >
-                    {period === 'week' ? '7D' :
-                      period === 'month' ? '30D' :
-                        period === 'year' ? '1Y' : 'YTD'}
+                    {period === 'week' ? '7D' : 
+                     period === 'month' ? '30D' : 
+                     period === 'year' ? '1Y' : 'YTD'}
                   </Text>
                 </TouchableOpacity>
               ))}
@@ -462,22 +473,24 @@ export default function HistoryScreen() {
                       {formatDate(day.date)}
                     </Text>
                   </View>
-
+                  
                   {/* Progress Bar Section */}
                   <View className="flex-1 ml-4">
                     <View className="flex-row items-center justify-between mb-2">
                       <Text className="text-sm font-medium text-[#7b8794]">
                         {day.total}ml / {day.goal}ml
                       </Text>
-                      <Text className={`text-sm font-bold ${day.percentage >= 100 ? 'text-[#22c55e]' : 'text-[#7b8794]'
-                        }`}>
+                      <Text className={`text-sm font-bold ${
+                        day.percentage >= 100 ? 'text-[#22c55e]' : 'text-[#7b8794]'
+                      }`}>
                         {day.percentage}%
                       </Text>
                     </View>
                     <View className="h-3 bg-[#e1f5fe] rounded-full overflow-hidden">
-                      <View
-                        className={`h-full rounded-full ${day.percentage >= 100 ? 'bg-[#22c55e]' : 'bg-[#1793c6]'
-                          }`}
+                      <View 
+                        className={`h-full rounded-full ${
+                          day.percentage >= 100 ? 'bg-[#22c55e]' : 'bg-[#1793c6]'
+                        }`}
                         style={{ width: `${Math.min(day.percentage, 100)}%` }}
                       />
                     </View>
