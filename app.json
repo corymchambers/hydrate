@@ -4,6 +4,7 @@
     "slug": "hydrate",
     "version": "1.0.0",
     "orientation": "portrait",
+    "buildNumber": "6",
     "icon": "./assets/images/icon.png",
     "scheme": "hydrate",
     "userInterfaceStyle": "automatic",
@@ -22,6 +23,7 @@
     },
     "android": {
       "package": "com.corymchambers1.hydrate",
+      "versionCode": 7,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
