@@ -3,7 +3,7 @@ import WaterGoalAnimation from '@/components/WaterGoalAnimation';
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useSQLiteContext } from 'expo-sqlite';
 import { useEffect, useState } from 'react';
-import { Pressable, ScrollView, Text, View } from 'react-native';
+import { Alert, Dimensions, Pressable, ScrollView, Text, View } from 'react-native';
 
 export default function HomeScreen() {
   const db = useSQLiteContext();
@@ -145,6 +145,44 @@ export default function HomeScreen() {
     }
   };
 
+  const resetToday = () => {
+    Alert.alert(
+      'Reset Today\'s Water Intake',
+      'Are you sure you want to delete all water logs for today? This cannot be undone.',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel'
+        },
+        {
+          text: 'Reset',
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              const today = new Date();
+              today.setHours(0, 0, 0, 0);
+              const startOfDay = today.getTime();
+              const endOfDay = startOfDay + (24 * 60 * 60 * 1000) - 1;
+
+              await db.runAsync(
+                'DELETE FROM water_log WHERE drank_at >= ? AND drank_at <= ?',
+                [startOfDay, endOfDay]
+              );
+
+              // Reload data
+              await Promise.all([
+                loadTodayWaterIntake(),
+                loadCurrentStreak()
+              ]);
+            } catch (error) {
+              console.error('Error resetting today\'s water:', error);
+            }
+          }
+        }
+      ]
+    );
+  };
+
   // Calculate stats - only if data is loaded
   const remainingAmount = currentAmount !== null && goalAmount !== null
     ? Math.max(0, goalAmount - currentAmount)
@@ -165,7 +203,7 @@ export default function HomeScreen() {
   return (
     <ScrollView className="flex-1 bg-[#eaf6fb] px-4 pt-16">
       {/* Header */}
-      <View className="items-center mb-6">
+      <View className={`items-center ${Dimensions.get('window').height < 700 ? 'mb-4' : 'mb-6'}`}>
         <View className="flex-row gap-2 items-center">
           <WaterDrop />
           <Text className="text-4xl font-bold text-[#1793c6] mb-1">Hydrate</Text>
@@ -177,7 +215,7 @@ export default function HomeScreen() {
       <WaterGoalAnimation currentAmount={currentAmount} goalAmount={goalAmount} />
 
       {/* Stats Row */}
-      <View className="flex-row justify-between mb-6">
+      <View className={`flex-row justify-between ${Dimensions.get('window').height < 700 ? 'mb-3' : 'mb-6'}`}>
         <View className="flex-1 items-center bg-white rounded-xl py-4 mx-1 shadow">
           <Feather name="target" size={24} color="#1793c6" />
           <Text className="text-xl font-bold text-[#1793c6]">{remainingAmount}</Text>
@@ -199,8 +237,8 @@ export default function HomeScreen() {
       <View className="flex-1" />
 
       {/* Quick Add */}
-      <Text className="text-center text-lg font-semibold text-[#1793c6] mb-2">Quick Add</Text>
-      <View className="flex-row justify-between mb-3">
+      <Text className={`text-center text-lg font-semibold text-[#1793c6] ${Dimensions.get('window').height < 700 ? 'mb-1' : 'mb-2'}`}>Quick Add</Text>
+      <View className={`flex-row justify-between ${Dimensions.get('window').height < 700 ? 'mb-2' : 'mb-3'}`}>
         <Pressable
           className="flex-1 bg-[#1cc6e4] rounded-xl py-4 mx-1 items-center flex-row justify-center"
           onPress={() => addWater(250)}
@@ -216,20 +254,20 @@ export default function HomeScreen() {
           <Text className="text-white font-bold">500ml</Text>
         </Pressable>
       </View>
-      <View className="flex-row justify-between mb-8">
-        <Pressable
-          className="flex-1 bg-[#1cc6e4] rounded-xl py-4 mx-1 items-center flex-row justify-center"
-          onPress={() => addWater(750)}
-        >
-          <MaterialCommunityIcons name="cup" size={20} color="#fff" style={{ marginRight: 6 }} />
-          <Text className="text-white font-bold">750ml</Text>
-        </Pressable>
+      <View className={`flex-row justify-between ${Dimensions.get('window').height < 700 ? 'mb-4' : 'mb-8'}`}>
         <Pressable
           className="flex-1 bg-[#1793c6] rounded-xl py-4 mx-1 items-center flex-row justify-center"
           onPress={() => addWater(1000)}
         >
           <MaterialCommunityIcons name="cup-water" size={20} color="#fff" style={{ marginRight: 6 }} />
           <Text className="text-white font-bold">1L</Text>
+        </Pressable>
+        <Pressable
+          className="flex-1 bg-[#d97d7d] rounded-xl py-4 mx-1 items-center flex-row justify-center"
+          onPress={resetToday}
+        >
+          <MaterialCommunityIcons name="restart" size={20} color="#fff" style={{ marginRight: 6 }} />
+          <Text className="text-white font-bold">Reset</Text>
         </Pressable>
       </View>
     </ScrollView>

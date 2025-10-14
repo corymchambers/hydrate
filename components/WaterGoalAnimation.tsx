@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Animated, StyleSheet, Text, View } from 'react-native';
+import { Animated, Dimensions, StyleSheet, Text, View } from 'react-native';
 import Svg, { Circle, ClipPath, Defs, G, LinearGradient, Path, Stop } from 'react-native-svg';
 import WaterDrop from './WaterDrop';
 
@@ -17,9 +17,11 @@ const WaterGoalAnimation = ({ currentAmount = 750, goalAmount = 2000 }) => {
     }).start();
   }, [percentage]);
 
-  // Circle dimensions
-  const size = 300;
-  const strokeWidth = 12;
+  // Responsive circle dimensions based on screen height
+  const screenHeight = Dimensions.get('window').height;
+  // Use smaller size for shorter screens (iPhone SE, etc.)
+  const size = screenHeight < 700 ? 220 : 300;
+  const strokeWidth = screenHeight < 700 ? 10 : 12;
   const radius = (size - strokeWidth) / 2;
   const center = size / 2;
 
@@ -35,9 +37,12 @@ const WaterGoalAnimation = ({ currentAmount = 750, goalAmount = 2000 }) => {
   const createArcPath = (x, y, radius, startAngle, endAngle) => {
     if (endAngle <= 0) return '';
 
-    const start = polarToCartesian(x, y, radius, endAngle);
+    // Cap at 359.99 to avoid full circle rendering issue
+    const cappedEndAngle = Math.min(endAngle, 359.99);
+
+    const start = polarToCartesian(x, y, radius, cappedEndAngle);
     const end = polarToCartesian(x, y, radius, startAngle);
-    const largeArcFlag = endAngle - startAngle <= 180 ? '0' : '1';
+    const largeArcFlag = cappedEndAngle - startAngle <= 180 ? '0' : '1';
 
     return [
       'M', start.x, start.y,
@@ -139,16 +144,16 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 20,
+    padding: Dimensions.get('window').height < 700 ? 10 : 20,
   },
   cardContainer: {
     alignItems: 'center',
   },
   circleContainer: {
-    width: 300,
-    height: 300,
+    width: Dimensions.get('window').height < 700 ? 220 : 300,
+    height: Dimensions.get('window').height < 700 ? 220 : 300,
     position: 'relative',
-    marginBottom: 24,
+    marginBottom: Dimensions.get('window').height < 700 ? 12 : 24,
   },
   svg: {
     position: 'absolute',
@@ -171,26 +176,26 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   currentAmount: {
-    fontSize: 48,
+    fontSize: Dimensions.get('window').height < 700 ? 36 : 48,
     fontWeight: '700',
     color: '#2E5266',
     includeFontPadding: false,
   },
   unit: {
-    fontSize: 24,
+    fontSize: Dimensions.get('window').height < 700 ? 18 : 24,
     fontWeight: '500',
     color: '#2E5266',
     marginLeft: 3,
     includeFontPadding: false,
   },
   goalText: {
-    fontSize: 16,
+    fontSize: Dimensions.get('window').height < 700 ? 13 : 16,
     color: '#4A90A4',
     includeFontPadding: false,
-    marginBottom: 8,
+    marginBottom: Dimensions.get('window').height < 700 ? 4 : 8,
   },
   percentageText: {
-    fontSize: 36,
+    fontSize: Dimensions.get('window').height < 700 ? 28 : 36,
     fontWeight: '700',
     color: '#4A90A4',
     includeFontPadding: false,
