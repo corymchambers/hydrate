@@ -7,7 +7,7 @@ import {
 import { Feather } from '@expo/vector-icons';
 import { useSQLiteContext } from 'expo-sqlite';
 import { useEffect, useRef, useState } from 'react';
-import { Alert, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, Keyboard, KeyboardAvoidingView, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 export default function SettingsScreen() {
   const db = useSQLiteContext();
@@ -174,17 +174,25 @@ export default function SettingsScreen() {
   };
 
   return (
-    <View className="flex-1 bg-[#eaf6fb] px-4 pt-16">
-      {/* Header */}
-      <View className="items-center mb-8">
-        <Text className="text-4xl font-bold text-[#1793c6] mb-1">Settings</Text>
-        <Text className="text-base text-[#1793c6]">Customize your hydration experience</Text>
-      </View>
+    <KeyboardAvoidingView
+      className="flex-1 bg-[#eaf6fb]"
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
+      <ScrollView
+        className="flex-1 px-4 pt-16"
+        keyboardShouldPersistTaps="handled"
+        onScrollBeginDrag={() => Keyboard.dismiss()}
+      >
+        {/* Header */}
+        <View className="items-center mb-8">
+          <Text className="text-4xl font-bold text-[#1793c6] mb-1">Settings</Text>
+          <Text className="text-base text-[#1793c6]">Customize your hydration experience</Text>
+        </View>
 
-      {/* Settings Cards */}
-      <View>
-        {/* Daily Goal Card */}
-        <View className="bg-white rounded-xl p-6 shadow mb-8">
+        {/* Settings Cards */}
+        <View>
+          {/* Daily Goal Card */}
+          <View className="bg-white rounded-xl p-6 shadow mb-8">
           <View className="flex-row items-center justify-between">
             <View className="flex-row items-center">
               <View className="bg-[#e3f2fd] rounded-full p-3 mr-4">
@@ -203,6 +211,7 @@ export default function SettingsScreen() {
                       className="text-lg font-bold text-[#1793c6] bg-gray-100 px-2 py-1 rounded min-w-[60px] text-center mr-1"
                       maxLength={5}
                       selectTextOnFocus={true}
+                      returnKeyType="done"
                       onSubmitEditing={handleSaveGoal}
                     />
                     <Text className="text-lg font-bold text-[#1793c6]">
@@ -342,6 +351,8 @@ export default function SettingsScreen() {
                     className="flex-1 text-base text-[#1793c6] bg-gray-100 px-3 py-2 rounded mr-2"
                     maxLength={5}
                     selectTextOnFocus={true}
+                    returnKeyType="done"
+                    onSubmitEditing={() => Keyboard.dismiss()}
                   />
                   <Text className="text-sm text-[#7b8794]">{getUnitSuffix(unitSystem || 'metric')}</Text>
                 </View>
@@ -357,6 +368,8 @@ export default function SettingsScreen() {
                     className="flex-1 text-base text-[#1793c6] bg-gray-100 px-3 py-2 rounded mr-2"
                     maxLength={5}
                     selectTextOnFocus={true}
+                    returnKeyType="done"
+                    onSubmitEditing={() => Keyboard.dismiss()}
                   />
                   <Text className="text-sm text-[#7b8794]">{getUnitSuffix(unitSystem || 'metric')}</Text>
                 </View>
@@ -372,6 +385,8 @@ export default function SettingsScreen() {
                     className="flex-1 text-base text-[#1793c6] bg-gray-100 px-3 py-2 rounded mr-2"
                     maxLength={5}
                     selectTextOnFocus={true}
+                    returnKeyType="done"
+                    onSubmitEditing={() => Keyboard.dismiss()}
                   />
                   <Text className="text-sm text-[#7b8794]">{getUnitSuffix(unitSystem || 'metric')}</Text>
                 </View>
@@ -391,7 +406,8 @@ export default function SettingsScreen() {
             </View>
           )}
         </View>
-      </View>
-    </View>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
