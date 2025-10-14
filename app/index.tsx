@@ -1,12 +1,17 @@
 import WaterDrop from '@/components/WaterDrop';
 import WaterGoalAnimation from '@/components/WaterGoalAnimation';
+import { useSettingsStore } from '@/src/state/settingsStore';
+import { convertFromMl, formatVolume, getUnitSuffix } from '@/src/utils/conversions';
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
+import { useFocusEffect } from 'expo-router';
 import { useSQLiteContext } from 'expo-sqlite';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Alert, Dimensions, Pressable, ScrollView, Text, View } from 'react-native';
 
 export default function HomeScreen() {
   const db = useSQLiteContext();
+  const unitSystem = useSettingsStore((s) => s.unitSystem);
+  const quickAddButtons = useSettingsStore((s) => s.quickAddButtons);
   const [currentAmount, setCurrentAmount] = useState<number | null>(null);
   const [goalAmount, setGoalAmount] = useState<number | null>(null);
   const [currentStreak, setCurrentStreak] = useState<number | null>(null);
@@ -25,6 +30,13 @@ export default function HomeScreen() {
   useEffect(() => {
     loadData();
   }, []);
+
+  // Reload data when screen comes into focus (e.g., after returning from settings)
+  useFocusEffect(
+    useCallback(() => {
+      loadData();
+    }, [])
+  );
 
   const loadData = async () => {
     await Promise.all([
@@ -218,8 +230,8 @@ export default function HomeScreen() {
       <View className={`flex-row justify-between ${Dimensions.get('window').height < 700 ? 'mb-3' : 'mb-6'}`}>
         <View className="flex-1 items-center bg-white rounded-xl py-4 mx-1 shadow">
           <Feather name="target" size={24} color="#1793c6" />
-          <Text className="text-xl font-bold text-[#1793c6]">{remainingAmount}</Text>
-          <Text className="text-xs text-[#1793c6]">ml left</Text>
+          <Text className="text-xl font-bold text-[#1793c6]">{Math.round(convertFromMl(remainingAmount || 0, unitSystem))}</Text>
+          <Text className="text-xs text-[#1793c6]">{getUnitSuffix(unitSystem)} left</Text>
         </View>
         <View className="flex-1 items-center bg-white rounded-xl py-4 mx-1 shadow">
           <Feather name="trending-up" size={24} color="#1793c6" />
@@ -241,26 +253,26 @@ export default function HomeScreen() {
       <View className={`flex-row justify-between ${Dimensions.get('window').height < 700 ? 'mb-2' : 'mb-3'}`}>
         <Pressable
           className="flex-1 bg-[#1cc6e4] rounded-xl py-4 mx-1 items-center flex-row justify-center"
-          onPress={() => addWater(250)}
+          onPress={() => addWater(quickAddButtons[0])}
         >
           <MaterialCommunityIcons name="cup" size={20} color="#fff" style={{ marginRight: 6 }} />
-          <Text className="text-white font-bold">250ml</Text>
+          <Text className="text-white font-bold">{formatVolume(quickAddButtons[0], unitSystem)}</Text>
         </Pressable>
         <Pressable
-          className="flex-1 bg-[#1cc6e4] rounded-xl py-4 mx-1 items-center flex-row justify-center"
-          onPress={() => addWater(500)}
+          className="flex-1 bg-[#4aa8c6] rounded-xl py-4 mx-1 items-center flex-row justify-center"
+          onPress={() => addWater(quickAddButtons[1])}
         >
           <MaterialCommunityIcons name="cup" size={20} color="#fff" style={{ marginRight: 6 }} />
-          <Text className="text-white font-bold">500ml</Text>
+          <Text className="text-white font-bold">{formatVolume(quickAddButtons[1], unitSystem)}</Text>
         </Pressable>
       </View>
       <View className={`flex-row justify-between ${Dimensions.get('window').height < 700 ? 'mb-4' : 'mb-8'}`}>
         <Pressable
           className="flex-1 bg-[#1793c6] rounded-xl py-4 mx-1 items-center flex-row justify-center"
-          onPress={() => addWater(1000)}
+          onPress={() => addWater(quickAddButtons[2])}
         >
           <MaterialCommunityIcons name="cup-water" size={20} color="#fff" style={{ marginRight: 6 }} />
-          <Text className="text-white font-bold">1L</Text>
+          <Text className="text-white font-bold">{formatVolume(quickAddButtons[2], unitSystem)}</Text>
         </Pressable>
         <Pressable
           className="flex-1 bg-[#d97d7d] rounded-xl py-4 mx-1 items-center flex-row justify-center"

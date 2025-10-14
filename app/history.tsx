@@ -1,8 +1,10 @@
 import { useSettingsStore } from '@/src/state/settingsStore';
 import {
-  formatVolume
+  convertFromMl,
+  formatVolume,
+  getUnitSuffix
 } from '@/src/utils/conversions';
-import { Feather } from '@expo/vector-icons';
+import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useSQLiteContext } from 'expo-sqlite';
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, ScrollView, Text, TouchableOpacity, View } from 'react-native';
@@ -311,12 +313,10 @@ export default function HistoryScreen() {
   };
 
   const getActivityIcon = (amount: number) => {
-    // Simple heuristic: assume coffee if small amount (under 400ml)
-    return amount < 400 ? 'coffee' : 'droplet';
-  };
-
-  const getActivityType = (amount: number) => {
-    return amount < 400 ? 'Coffee' : 'Water';
+    // Different cup icons based on amount
+    if (amount >= 750) return 'cup-water';      // Full/large amount
+    if (amount >= 300) return 'cup';            // Medium amount
+    return 'cup-outline';                        // Small amount
   };
 
   const formatActivityAmount = (amountMl: number): string => {
@@ -373,25 +373,24 @@ export default function HistoryScreen() {
           {todayActivity.length === 0 ? (
             <Text className="text-[#7b8794] text-center py-4">No activity today</Text>
           ) : (
-            <View className="space-y-4">
+            <View className="space-y-2">
               {todayActivity.map((activity, index) => (
-                <View key={activity.id} className="flex-row items-center">
-                  {/* Icon */}
-                  <View className="bg-[#e3f2fd] rounded-full p-3 mr-4">
-                    <Feather 
-                      name={getActivityIcon(activity.amount_ml)} 
-                      size={20} 
-                      color="#1793c6" 
-                    />
-                  </View>
-                  
-                  {/* Activity Details */}
-                  <View className="flex-1">
-                    <Text className="text-lg font-semibold text-[#2c3e50]">
-                      {formatActivityAmount(activity.amount_ml)} {getActivityType(activity.amount_ml)}
-                    </Text>
-                    <Text className="text-sm text-[#7b8794]">{formatTime(activity.drank_at)}</Text>
-                  </View>
+                <View
+                  key={activity.id}
+                  className={`flex-row items-center py-3 ${
+                    index !== todayActivity.length - 1 ? 'border-b border-[#f0f0f0]' : ''
+                  }`}
+                >
+                  <MaterialCommunityIcons
+                    name={getActivityIcon(activity.amount_ml)}
+                    size={22}
+                    color="#1793c6"
+                    style={{ marginRight: 12 }}
+                  />
+                  <Text className="text-lg font-semibold text-[#2c3e50] flex-1">
+                    {formatActivityAmount(activity.amount_ml)}
+                  </Text>
+                  <Text className="text-sm text-[#7b8794]">{formatTime(activity.drank_at)}</Text>
                 </View>
               ))}
             </View>
@@ -460,12 +459,11 @@ export default function HistoryScreen() {
           </View>
 
           {/* Daily Breakdown */}
-          <View className="max-h-80">
-            <ScrollView showsVerticalScrollIndicator={false}>
-              {periodData.slice().reverse().map((day, index) => (
+          <View>
+            {periodData.slice().reverse().map((day, index) => (
                 <View key={index} className="flex-row items-center py-4 border-b border-[#f0f0f0] last:border-b-0">
                   {/* Date */}
-                  <View className="w-16">
+                  <View className="w-20">
                     <Text className="text-sm font-medium text-[#2c3e50]">
                       {formatDayName(day.date)}
                     </Text>
@@ -478,7 +476,7 @@ export default function HistoryScreen() {
                   <View className="flex-1 ml-4">
                     <View className="flex-row items-center justify-between mb-2">
                       <Text className="text-sm font-medium text-[#7b8794]">
-                        {day.total}ml / {day.goal}ml
+                        {Math.round(convertFromMl(day.total, unitSystem))}{getUnitSuffix(unitSystem)} / {Math.round(convertFromMl(day.goal, unitSystem))}{getUnitSuffix(unitSystem)}
                       </Text>
                       <Text className={`text-sm font-bold ${
                         day.percentage >= 100 ? 'text-[#22c55e]' : 'text-[#7b8794]'
@@ -497,7 +495,6 @@ export default function HistoryScreen() {
                   </View>
                 </View>
               ))}
-            </ScrollView>
           </View>
         </View>
 

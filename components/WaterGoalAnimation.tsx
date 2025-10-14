@@ -1,9 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 import { Animated, Dimensions, StyleSheet, Text, View } from 'react-native';
 import Svg, { Circle, ClipPath, Defs, G, LinearGradient, Path, Stop } from 'react-native-svg';
+import { useSettingsStore } from '@/src/state/settingsStore';
+import { convertFromMl, getUnitSuffix } from '@/src/utils/conversions';
 import WaterDrop from './WaterDrop';
 
 const WaterGoalAnimation = ({ currentAmount = 750, goalAmount = 2000 }) => {
+  const unitSystem = useSettingsStore((s) => s.unitSystem);
   const percentage = Math.min((currentAmount / goalAmount) * 100, 100);
 
   // Animated value for progress
@@ -125,11 +128,11 @@ const WaterGoalAnimation = ({ currentAmount = 750, goalAmount = 2000 }) => {
             </View>
 
             <View style={styles.amountContainer}>
-              <Text style={styles.currentAmount}>{currentAmount}</Text>
-              <Text style={styles.unit}>ml</Text>
+              <Text style={styles.currentAmount}>{Math.round(convertFromMl(currentAmount, unitSystem))}</Text>
+              <Text style={styles.unit}>{getUnitSuffix(unitSystem)}</Text>
             </View>
 
-            <Text style={styles.goalText}>of {goalAmount}ml goal</Text>
+            <Text style={styles.goalText}>of {Math.round(convertFromMl(goalAmount, unitSystem))}{getUnitSuffix(unitSystem)} goal</Text>
 
             {/* Percentage inside circle */}
             <Text style={styles.percentageText}>{Math.round(percentage)}%</Text>
