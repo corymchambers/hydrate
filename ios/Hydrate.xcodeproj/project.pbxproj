@@ -7,29 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		060AFC651F4825E8B6E2A3BD /* libPods-Hydrate.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C55E4CB85391055EF2947B38 /* libPods-Hydrate.a */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
-		7268DCD2BDCCA3E72FC964C1 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 5ED0A2D150674C2DB3F43884 /* PrivacyInfo.xcprivacy */; };
-		B934E1CB9F6599F447B195D3 /* libPods-HydrateWaterTracker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C0B1D3A9A37027E8E0CCE12B /* libPods-HydrateWaterTracker.a */; };
+		6AAD05207B7314F15F137622 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = FE94BC390E0B5C901A9C6C3C /* PrivacyInfo.xcprivacy */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
-		C4F673451C1F71C2EF147FB1 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21D7C59AA55971F8F83A710 /* ExpoModulesProvider.swift */; };
+		E109F8A644A315145E28F546 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13FED92E75012499B20FBCE9 /* ExpoModulesProvider.swift */; };
 		F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11748412D0307B40044C1D9 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		041C2179D7FD3EA707C23C4A /* Pods-HydrateWaterTracker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HydrateWaterTracker.release.xcconfig"; path = "Target Support Files/Pods-HydrateWaterTracker/Pods-HydrateWaterTracker.release.xcconfig"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* HydrateWaterTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HydrateWaterTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = HydrateWaterTracker/Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = HydrateWaterTracker/Info.plist; sourceTree = "<group>"; };
-		5ED0A2D150674C2DB3F43884 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = HydrateWaterTracker/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		8CFE78287C7BB60D25B6C90E /* Pods-HydrateWaterTracker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HydrateWaterTracker.debug.xcconfig"; path = "Target Support Files/Pods-HydrateWaterTracker/Pods-HydrateWaterTracker.debug.xcconfig"; sourceTree = "<group>"; };
-		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = HydrateWaterTracker/SplashScreen.storyboard; sourceTree = "<group>"; };
-		B21D7C59AA55971F8F83A710 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-HydrateWaterTracker/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* Hydrate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hydrate.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Hydrate/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Hydrate/Info.plist; sourceTree = "<group>"; };
+		13FED92E75012499B20FBCE9 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-Hydrate/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
+		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = Hydrate/SplashScreen.storyboard; sourceTree = "<group>"; };
+		AE134CBFA1CFE583F6D32B91 /* Pods-Hydrate.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hydrate.debug.xcconfig"; path = "Target Support Files/Pods-Hydrate/Pods-Hydrate.debug.xcconfig"; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
-		C0B1D3A9A37027E8E0CCE12B /* libPods-HydrateWaterTracker.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HydrateWaterTracker.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C55E4CB85391055EF2947B38 /* libPods-Hydrate.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Hydrate.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CBDF3B6E3249A2ED1C657CE6 /* Pods-Hydrate.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hydrate.release.xcconfig"; path = "Target Support Files/Pods-Hydrate/Pods-Hydrate.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		F11748412D0307B40044C1D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = HydrateWaterTracker/AppDelegate.swift; sourceTree = "<group>"; };
-		F11748442D0722820044C1D9 /* HydrateWaterTracker-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "HydrateWaterTracker-Bridging-Header.h"; path = "HydrateWaterTracker/HydrateWaterTracker-Bridging-Header.h"; sourceTree = "<group>"; };
+		F11748412D0307B40044C1D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = Hydrate/AppDelegate.swift; sourceTree = "<group>"; };
+		F11748442D0722820044C1D9 /* Hydrate-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Hydrate-Bridging-Header.h"; path = "Hydrate/Hydrate-Bridging-Header.h"; sourceTree = "<group>"; };
+		FE94BC390E0B5C901A9C6C3C /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = Hydrate/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,44 +37,52 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B934E1CB9F6599F447B195D3 /* libPods-HydrateWaterTracker.a in Frameworks */,
+				060AFC651F4825E8B6E2A3BD /* libPods-Hydrate.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		13B07FAE1A68108700A75B9A /* HydrateWaterTracker */ = {
+		061F62AD61A07A73E96BFDE7 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				AE134CBFA1CFE583F6D32B91 /* Pods-Hydrate.debug.xcconfig */,
+				CBDF3B6E3249A2ED1C657CE6 /* Pods-Hydrate.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		13B07FAE1A68108700A75B9A /* Hydrate */ = {
 			isa = PBXGroup;
 			children = (
 				F11748412D0307B40044C1D9 /* AppDelegate.swift */,
-				F11748442D0722820044C1D9 /* HydrateWaterTracker-Bridging-Header.h */,
+				F11748442D0722820044C1D9 /* Hydrate-Bridging-Header.h */,
 				BB2F792B24A3F905000567C9 /* Supporting */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
-				5ED0A2D150674C2DB3F43884 /* PrivacyInfo.xcprivacy */,
+				FE94BC390E0B5C901A9C6C3C /* PrivacyInfo.xcprivacy */,
 			);
-			name = HydrateWaterTracker;
+			name = Hydrate;
+			sourceTree = "<group>";
+		};
+		19672AE6959C45BFCAC7D2DE /* Hydrate */ = {
+			isa = PBXGroup;
+			children = (
+				13FED92E75012499B20FBCE9 /* ExpoModulesProvider.swift */,
+			);
+			name = Hydrate;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				C0B1D3A9A37027E8E0CCE12B /* libPods-HydrateWaterTracker.a */,
+				C55E4CB85391055EF2947B38 /* libPods-Hydrate.a */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		82ACFDBF4D79C17E72391E33 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				8CFE78287C7BB60D25B6C90E /* Pods-HydrateWaterTracker.debug.xcconfig */,
-				041C2179D7FD3EA707C23C4A /* Pods-HydrateWaterTracker.release.xcconfig */,
-			);
-			name = Pods;
-			path = Pods;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -87,12 +95,12 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				13B07FAE1A68108700A75B9A /* HydrateWaterTracker */,
+				13B07FAE1A68108700A75B9A /* Hydrate */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
-				82ACFDBF4D79C17E72391E33 /* Pods */,
-				D0F6D5F0B0D76BE7072C63E3 /* ExpoModulesProviders */,
+				061F62AD61A07A73E96BFDE7 /* Pods */,
+				901508F929FF72E33CA94DA4 /* ExpoModulesProviders */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -102,17 +110,17 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* HydrateWaterTracker.app */,
+				13B07F961A680F5B00A75B9A /* Hydrate.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		9C91B07FA122D14EC6717699 /* HydrateWaterTracker */ = {
+		901508F929FF72E33CA94DA4 /* ExpoModulesProviders */ = {
 			isa = PBXGroup;
 			children = (
-				B21D7C59AA55971F8F83A710 /* ExpoModulesProvider.swift */,
+				19672AE6959C45BFCAC7D2DE /* Hydrate */,
 			);
-			name = HydrateWaterTracker;
+			name = ExpoModulesProviders;
 			sourceTree = "<group>";
 		};
 		BB2F792B24A3F905000567C9 /* Supporting */ = {
@@ -121,40 +129,32 @@
 				BB2F792C24A3F905000567C9 /* Expo.plist */,
 			);
 			name = Supporting;
-			path = HydrateWaterTracker/Supporting;
-			sourceTree = "<group>";
-		};
-		D0F6D5F0B0D76BE7072C63E3 /* ExpoModulesProviders */ = {
-			isa = PBXGroup;
-			children = (
-				9C91B07FA122D14EC6717699 /* HydrateWaterTracker */,
-			);
-			name = ExpoModulesProviders;
+			path = Hydrate/Supporting;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		13B07F861A680F5B00A75B9A /* HydrateWaterTracker */ = {
+		13B07F861A680F5B00A75B9A /* Hydrate */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "HydrateWaterTracker" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Hydrate" */;
 			buildPhases = (
 				08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */,
-				E91B562796FE4FCB927EB9CF /* [Expo] Configure project */,
+				48B5EACCDCEA3667EA936381 /* [Expo] Configure project */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */,
-				96AA7709DF1323585F254823 /* [CP] Embed Pods Frameworks */,
+				A933AD055E80618954877E69 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = HydrateWaterTracker;
-			productName = HydrateWaterTracker;
-			productReference = 13B07F961A680F5B00A75B9A /* HydrateWaterTracker.app */;
+			name = Hydrate;
+			productName = Hydrate;
+			productReference = 13B07F961A680F5B00A75B9A /* Hydrate.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -170,7 +170,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "HydrateWaterTracker" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Hydrate" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -183,7 +183,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* HydrateWaterTracker */,
+				13B07F861A680F5B00A75B9A /* Hydrate */,
 			);
 		};
 /* End PBXProject section */
@@ -196,7 +196,7 @@
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
-				7268DCD2BDCCA3E72FC964C1 /* PrivacyInfo.xcprivacy in Resources */,
+				6AAD05207B7314F15F137622 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -233,12 +233,31 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-HydrateWaterTracker-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Hydrate-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		48B5EACCDCEA3667EA936381 /* [Expo] Configure project */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "[Expo] Configure project";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-Hydrate/expo-configure-project.sh\"\n";
 		};
 		800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -246,7 +265,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-HydrateWaterTracker/Pods-HydrateWaterTracker-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Hydrate/Pods-Hydrate-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/EXConstants/EXConstants.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/EXConstants/ExpoConstants_privacy.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/ExpoFileSystem/ExpoFileSystem_privacy.bundle",
@@ -283,16 +302,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HydrateWaterTracker/Pods-HydrateWaterTracker-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Hydrate/Pods-Hydrate-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		96AA7709DF1323585F254823 /* [CP] Embed Pods Frameworks */ = {
+		A933AD055E80618954877E69 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-HydrateWaterTracker/Pods-HydrateWaterTracker-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-Hydrate/Pods-Hydrate-frameworks.sh",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/Pre-built/hermes.framework/hermes",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -301,27 +320,8 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-HydrateWaterTracker/Pods-HydrateWaterTracker-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Hydrate/Pods-Hydrate-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
-		};
-		E91B562796FE4FCB927EB9CF /* [Expo] Configure project */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "[Expo] Configure project";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-HydrateWaterTracker/expo-configure-project.sh\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -331,7 +331,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */,
-				C4F673451C1F71C2EF147FB1 /* ExpoModulesProvider.swift in Sources */,
+				E109F8A644A315145E28F546 /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,18 +340,18 @@
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8CFE78287C7BB60D25B6C90E /* Pods-HydrateWaterTracker.debug.xcconfig */;
+			baseConfigurationReference = AE134CBFA1CFE583F6D32B91 /* Pods-Hydrate.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = HydrateWaterTracker/HydrateWaterTracker.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Hydrate/Hydrate.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"FB_SONARKIT_ENABLED=1",
 				);
-				INFOPLIST_FILE = HydrateWaterTracker/Info.plist;
+				INFOPLIST_FILE = Hydrate/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -365,8 +365,8 @@
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.corymchambers1.hydrate;
-				PRODUCT_NAME = HydrateWaterTracker;
-				SWIFT_OBJC_BRIDGING_HEADER = "HydrateWaterTracker/HydrateWaterTracker-Bridging-Header.h";
+				PRODUCT_NAME = Hydrate;
+				SWIFT_OBJC_BRIDGING_HEADER = "Hydrate/Hydrate-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -376,13 +376,13 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 041C2179D7FD3EA707C23C4A /* Pods-HydrateWaterTracker.release.xcconfig */;
+			baseConfigurationReference = CBDF3B6E3249A2ED1C657CE6 /* Pods-Hydrate.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = HydrateWaterTracker/HydrateWaterTracker.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Hydrate/Hydrate.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
-				INFOPLIST_FILE = HydrateWaterTracker/Info.plist;
+				INFOPLIST_FILE = Hydrate/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -396,8 +396,8 @@
 				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = com.corymchambers1.hydrate;
-				PRODUCT_NAME = HydrateWaterTracker;
-				SWIFT_OBJC_BRIDGING_HEADER = "HydrateWaterTracker/HydrateWaterTracker-Bridging-Header.h";
+				PRODUCT_NAME = Hydrate;
+				SWIFT_OBJC_BRIDGING_HEADER = "Hydrate/Hydrate-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -531,7 +531,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "HydrateWaterTracker" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Hydrate" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -540,7 +540,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "HydrateWaterTracker" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Hydrate" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
