@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "hydrate",
+    "name": "Hydrate - Water Tracker",
     "slug": "hydrate",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -8,9 +8,17 @@
     "scheme": "hydrate",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/images/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#eaf6fb"
+    },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.corymchambers1.hydrate"
+      "bundleIdentifier": "com.corymchambers1.hydrate",
+      "config": {
+        "usesNonExemptEncryption": false
+      }
     },
     "android": {
       "package": "com.corymchambers1.hydrate",
