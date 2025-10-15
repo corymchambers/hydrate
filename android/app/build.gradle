@@ -81,13 +81,6 @@ def enableProguardInReleaseBuilds = (findProperty('android.enableProguardInRelea
  */
 def jscFlavor = 'io.github.react-native-community:jsc-android:2026004.+'
 
-// Load keystore properties
-def keystorePropertiesFile = rootProject.file("keystore.properties")
-def keystoreProperties = new Properties()
-if (keystorePropertiesFile.exists()) {
-    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-}
-
 android {
     ndkVersion rootProject.ext.ndkVersion
 
@@ -99,7 +92,7 @@ android {
         applicationId 'com.corymchambers1.hydrate'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 7
+        versionCode 8
         versionName "1.0.0"
     }
     signingConfigs {
@@ -110,12 +103,10 @@ android {
             keyPassword 'android'
         }
         release {
-            if (keystorePropertiesFile.exists()) {
-                storeFile file(keystoreProperties['storeFile'])
-                storePassword keystoreProperties['storePassword']
-                keyAlias keystoreProperties['keyAlias']
-                keyPassword keystoreProperties['keyPassword']
-            }
+            storeFile file('../../@corymchambers1__hydrate.jks')
+            storePassword '8d69456c8f9d146624fcf97fcdfb2717'
+            keyAlias '916d61d407f21cbad3bf6758735d37d9'
+            keyPassword 'cd0ffad48ef270eb2bbdf1eebc5a63da'
         }
     }
     buildTypes {

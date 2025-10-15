@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "Hydrate",
+    "name": "Hydr8",
     "slug": "hydrate",
     "version": "1.0.0",
     "orientation": "portrait",
-    "buildNumber": "6",
+    "buildNumber": "7",
     "icon": "./assets/images/icon.png",
     "scheme": "hydrate",
     "userInterfaceStyle": "automatic",
@@ -23,7 +23,7 @@
     },
     "android": {
       "package": "com.corymchambers1.hydrate",
-      "versionCode": 7,
+      "versionCode": 8,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -47,7 +47,18 @@
         }
       ],
       "expo-localization",
-      "expo-sqlite"
+      "expo-sqlite",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "keystoreAlias": "916d61d407f21cbad3bf6758735d37d9",
+            "keystoreAliasPassword": "cd0ffad48ef270eb2bbdf1eebc5a63da",
+            "keystorePath": "../@corymchambers1__hydrate.jks",
+            "keystorePassword": "8d69456c8f9d146624fcf97fcdfb2717"
+          }
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true

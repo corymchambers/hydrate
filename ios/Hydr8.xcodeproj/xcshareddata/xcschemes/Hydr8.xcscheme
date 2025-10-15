@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "Hydrate.app"
-               BlueprintName = "Hydrate"
-               ReferencedContainer = "container:Hydrate.xcodeproj">
+               BuildableName = "Hydr8.app"
+               BlueprintName = "Hydr8"
+               ReferencedContainer = "container:Hydr8.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "HydrateTests.xctest"
-               BlueprintName = "HydrateTests"
-               ReferencedContainer = "container:Hydrate.xcodeproj">
+               BuildableName = "Hydr8Tests.xctest"
+               BlueprintName = "Hydr8Tests"
+               ReferencedContainer = "container:Hydr8.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "Hydrate.app"
-            BlueprintName = "Hydrate"
-            ReferencedContainer = "container:Hydrate.xcodeproj">
+            BuildableName = "Hydr8.app"
+            BlueprintName = "Hydr8"
+            ReferencedContainer = "container:Hydr8.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "Hydrate.app"
-            BlueprintName = "Hydrate"
-            ReferencedContainer = "container:Hydrate.xcodeproj">
+            BuildableName = "Hydr8.app"
+            BlueprintName = "Hydr8"
+            ReferencedContainer = "container:Hydr8.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

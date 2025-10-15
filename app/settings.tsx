@@ -177,6 +177,7 @@ export default function SettingsScreen() {
     <KeyboardAvoidingView
       className="flex-1 bg-[#eaf6fb]"
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
     >
       <ScrollView
         className="flex-1 px-4 pt-16"

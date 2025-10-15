@@ -4,7 +4,7 @@ import {
   formatVolume,
   getUnitSuffix
 } from '@/src/utils/conversions';
-import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 import { useSQLiteContext } from 'expo-sqlite';
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, ScrollView, Text, TouchableOpacity, View } from 'react-native';
@@ -381,12 +381,6 @@ export default function HistoryScreen() {
                     index !== todayActivity.length - 1 ? 'border-b border-[#f0f0f0]' : ''
                   }`}
                 >
-                  <MaterialCommunityIcons
-                    name={getActivityIcon(activity.amount_ml)}
-                    size={22}
-                    color="#1793c6"
-                    style={{ marginRight: 12 }}
-                  />
                   <Text className="text-lg font-semibold text-[#2c3e50] flex-1">
                     {formatActivityAmount(activity.amount_ml)}
                   </Text>
