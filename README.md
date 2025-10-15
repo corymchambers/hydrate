@@ -45,78 +45,118 @@ This project uses local builds instead of EAS Build for faster iteration and cos
 
 ### iOS Release Build
 
-1. **Update version/build number** in `app.json`:
+1. **Update build number** in `app.json`:
+
    ```json
    {
      "expo": {
        "version": "1.0.0",
-       "buildNumber": "6"
+       "buildNumber": "9"  // Increment this for each release
      }
    }
    ```
 
 2. **Prebuild the iOS project**:
+
    ```bash
    npx expo prebuild --platform ios --clean
    ```
 
 3. **Open Xcode**:
+
    ```bash
-   open ios/hydrate.xcworkspace
+   open ios/Hydr8.xcworkspace
    ```
 
-4. **Archive and Upload**:
-   - In Xcode, select "Any iOS Device (arm64)" as the destination
-   - Go to **Product → Archive**
-   - Once archived, click **Distribute App**
-   - Select **App Store Connect**
-   - Follow the prompts to upload to TestFlight
+   **Important**: Always open the `.xcworkspace` file, not the `.xcodeproj` file.
 
-5. **Process in App Store Connect**:
+4. **Configure signing in Xcode**:
+   - Select the "Hydr8" project in the left sidebar
+   - Select the "Hydr8" target
+   - Go to the "Signing & Capabilities" tab
+   - Check "Automatically manage signing"
+   - Select your development team from the dropdown
+
+   TODO: Need to find a way to not manually select your team each time.
+
+5. **Archive**:
+   - At the top of Xcode, select "Any iOS Device (arm64)" as the destination
+   - Go to **Product → Archive**
+   - Wait for the archive to complete (Xcode automatically uses Release configuration)
+
+6. **Upload to TestFlight**:
+   - The Organizer window will open automatically after archiving
+   - Click **Distribute App**
+   - Select **App Store Connect**
+   - Follow the prompts to upload
+
+7. **Process in App Store Connect**:
    - Go to [App Store Connect](https://appstoreconnect.apple.com)
    - Wait 10-30 minutes for processing
    - Add build to TestFlight for testing
 
 ### Android Release Build
 
-1. **First time only: Generate a signing key**:
-   ```bash
-   keytool -genkeypair -v -storetype PKCS12 -keystore ~/hydrate-upload-key.keystore -alias hydrate-key-alias -keyalg RSA -keysize 2048 -validity 10000
-   ```
+1. **Update version code** in `app.json`:
 
-   ⚠️ **Important**:
-   - Save the passwords you create
-   - Backup the keystore file securely
-   - You'll need this same keystore for all future releases
-
-2. **Configure signing** (first time only):
-
-   Create `android/keystore.properties` with your keystore info:
-   ```properties
-   storeFile=/path/to/your/hydrate-upload-key.keystore
-   keyAlias=hydrate-key-alias
-   storePassword=YOUR_KEYSTORE_PASSWORD
-   keyPassword=YOUR_KEY_PASSWORD
-   ```
-
-   ⚠️ This file is gitignored and contains sensitive data - never commit it!
-
-3. **Update version/build number** in `app.json`:
    ```json
    {
      "expo": {
        "version": "1.0.0",
-       "buildNumber": "6"
+       "android": {
+         "versionCode": 9  // Increment this for each release
+       }
      }
    }
    ```
 
-4. **Prebuild the Android project**:
+2. **Prebuild the Android project**:
+
    ```bash
    npx expo prebuild --platform android --clean
    ```
 
-5. **Build the release bundle**:
+3. **Add release signing configuration**:
+
+   You can probably just revert these changes in git and then re-update the build number. TODO: Need to find a way to improve this flow.
+
+   **Important**: Prebuild overwrites `android/app/build.gradle`, so you need to manually add the signing config after each prebuild.
+
+   Edit `android/app/build.gradle` and add the following:
+
+   a. Add the release signing config inside the `signingConfigs` block (around line 98):
+
+   ```gradle
+   signingConfigs {
+       debug {
+           storeFile file('debug.keystore')
+           storePassword 'android'
+           keyAlias 'androiddebugkey'
+           keyPassword 'android'
+       }
+       release {
+           storeFile file('../../@corymchambers1__hydrate.jks')
+           storePassword 'YOUR_STORE_PASSWORD'
+           keyAlias 'YOUR_KEY_ALIAS'
+           keyPassword 'YOUR_KEY_PASSWORD'
+       }
+   }
+   ```
+
+   b. Update the release buildType to use the release signing config (around line 117):
+
+   ```gradle
+   release {
+       signingConfig signingConfigs.release  // Change from signingConfigs.debug
+       shrinkResources (findProperty('android.enableShrinkResourcesInReleaseBuilds')?.toBoolean() ?: false)
+       minifyEnabled enableProguardInReleaseBuilds
+       proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+       crunchPngs (findProperty('android.enablePngCrunchInReleaseBuilds')?.toBoolean() ?: true)
+   }
+   ```
+
+4. **Build the release bundle**:
+
    ```bash
    cd android
    ./gradlew bundleRelease
@@ -124,19 +164,30 @@ This project uses local builds instead of EAS Build for faster iteration and cos
 
    This creates an `.aab` file at: `android/app/build/outputs/bundle/release/app-release.aab`
 
-6. **Upload to Google Play Console**:
+5. **Upload to Google Play Console**:
    - Go to [Google Play Console](https://play.google.com/console)
-   - Select your app → **Testing → Internal testing**
+   - Select your app → **Testing → Internal testing** (or Production)
    - Click **Create new release**
    - Upload the `.aab` file
    - Add release notes and publish
 
+### First Time Setup (Android)
+
+If this is your first time building for Android, you'll need to set up signing:
+
+1. **Your keystore file** should be at the project root: `@corymchambers1__hydrate.jks`
+2. **Important**: Never commit the keystore file or passwords to git
+3. **Backup the keystore file** - you can't update your app without it
+
 ### Important Notes
 
 - **Build numbers** must always increase for each upload
+  - iOS uses `buildNumber` in `app.json`
+  - Android uses `versionCode` in `app.json` (under `android`)
 - **iOS and Android** can have different build numbers
 - **Keystore backups** are critical - you can't update your Android app without the original keystore
-- `android/keystore.properties` is gitignored to protect your passwords
+- **After each prebuild**, you must manually re-add the Android signing configuration to `build.gradle`
+- **Xcode signing**: You must select your development team in Xcode before archiving
 
 ## Tech Stack
 

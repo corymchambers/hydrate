@@ -59,3 +59,5 @@ app-example
 *.keystore
 *.jks
 android/keystore.properties
+
+keystore.*

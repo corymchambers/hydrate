@@ -119,9 +119,23 @@ export default function HomeScreen() {
     try {
       let streak = 0;
       const today = new Date();
+      let startFromYesterday = false;
 
-      // Check backwards from today until we find a day that didn't meet the goal
-      for (let i = 0; i < 365; i++) { // Max 365 days to prevent infinite loop
+      // First check if today's goal is met
+      const todayTotal = await getDailyTotal(today);
+      const todayGoal = await getDailyGoalForDate(today);
+
+      if (todayTotal >= todayGoal) {
+        // Today is complete, include it in the streak
+        streak++;
+      } else {
+        // Today is not complete yet, start checking from yesterday
+        startFromYesterday = true;
+      }
+
+      // Check backwards from yesterday (or the day after today if today is complete)
+      const startDay = startFromYesterday ? 1 : 1;
+      for (let i = startDay; i < 365; i++) { // Max 365 days to prevent infinite loop
         const checkDate = new Date(today);
         checkDate.setDate(today.getDate() - i);
 
@@ -218,7 +232,7 @@ export default function HomeScreen() {
       <View className={`items-center ${Dimensions.get('window').height < 700 ? 'mb-4' : 'mb-6'}`}>
         <View className="flex-row gap-2 items-center">
           <WaterDrop />
-          <Text className="text-4xl font-bold text-[#1793c6] mb-1">Hydrate</Text>
+          <Text className="text-4xl font-bold text-[#1793c6] mb-1">Hydr8</Text>
         </View>
         <Text className="text-base text-[#1793c6]">{getCurrentDate()}</Text>
       </View>

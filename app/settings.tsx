@@ -5,6 +5,7 @@ import {
   getUnitSuffix
 } from '@/src/utils/conversions';
 import { Feather } from '@expo/vector-icons';
+import Constants from 'expo-constants';
 import { useSQLiteContext } from 'expo-sqlite';
 import { useEffect, useRef, useState } from 'react';
 import { Alert, Keyboard, KeyboardAvoidingView, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
@@ -406,6 +407,15 @@ export default function SettingsScreen() {
               </Text>
             </View>
           )}
+        </View>
+
+        {/* Version Info */}
+        <View className="items-center mt-6 mb-8">
+          <Text className="text-xs text-[#1793c6] opacity-50">
+            Version {Constants.expoConfig?.version || '1.0.0'} • Build {Platform.OS === 'ios'
+              ? (Constants.expoConfig?.ios?.buildNumber || '7')
+              : (Constants.expoConfig?.android?.versionCode || '8')}
+          </Text>
         </View>
         </View>
       </ScrollView>
