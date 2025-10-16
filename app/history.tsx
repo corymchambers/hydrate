@@ -4,9 +4,11 @@ import {
   formatVolume,
   getUnitSuffix
 } from '@/src/utils/conversions';
+import { calculateCurrentStreak, getDailyGoalForDate, getDailyTotal } from '@/src/utils/streakCalculation';
 import { Feather } from '@expo/vector-icons';
+import { useFocusEffect } from 'expo-router';
 import { useSQLiteContext } from 'expo-sqlite';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { ActivityIndicator, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 
 interface ActivityEntry {
@@ -41,19 +43,27 @@ export default function HistoryScreen() {
     loadPeriodData(); // Load initial data
   }, []);
 
+  // Reload data when screen comes into focus (e.g., after returning from home screen)
+  useFocusEffect(
+    useCallback(() => {
+      loadHistoryData();
+      loadPeriodData();
+    }, [])
+  );
+
   const handlePeriodSelection = async (period: TimePeriod) => {
     if (isPeriodLoading) return;
-    
+
     setIsPeriodLoading(true);
     setSelectedPeriod(period);
-    
+
     try {
       const dates = getDateRange(period);
       const dayDataPromises = dates.map(async (date): Promise<DayData> => {
-        const total = await getDailyTotal(date);
-        const goal = await getDailyGoalForDate(date);
+        const total = await getDailyTotal(db, date);
+        const goal = await getDailyGoalForDate(db, date);
         const percentage = goal > 0 ? Math.round((total / goal) * 100) : 0;
-        
+
         return {
           date,
           total,
@@ -111,19 +121,6 @@ export default function HistoryScreen() {
     }
   };
 
-  const getDailyGoalForDate = async (date: Date): Promise<number> => {
-    try {
-      // Get the goal that was active on this date
-      const result = await db.getFirstAsync<{ goal_ml: number }>(
-        'SELECT goal_ml FROM goal_history WHERE changed_at <= ? ORDER BY changed_at DESC LIMIT 1',
-        [date.getTime()]
-      );
-      return result?.goal_ml || 2000;
-    } catch (error) {
-      console.error('Error getting goal for date:', error);
-      return 2000;
-    }
-  };
 
   const getDateRange = (period: TimePeriod): Date[] => {
     const today = new Date();
@@ -171,10 +168,10 @@ export default function HistoryScreen() {
     try {
       const dates = getDateRange(selectedPeriod);
       const dayDataPromises = dates.map(async (date): Promise<DayData> => {
-        const total = await getDailyTotal(date);
-        const goal = await getDailyGoalForDate(date);
+        const total = await getDailyTotal(db, date);
+        const goal = await getDailyGoalForDate(db, date);
         const percentage = goal > 0 ? Math.round((total / goal) * 100) : 0;
-        
+
         return {
           date,
           total,
@@ -231,46 +228,9 @@ export default function HistoryScreen() {
     }
   };
 
-  const getDailyTotal = async (date: Date): Promise<number> => {
-    try {
-      const startOfDay = new Date(date);
-      startOfDay.setHours(0, 0, 0, 0);
-      const endOfDay = new Date(date);
-      endOfDay.setHours(23, 59, 59, 999);
-
-      const result = await db.getFirstAsync<{ total: number }>(
-        'SELECT COALESCE(SUM(amount_ml), 0) as total FROM water_log WHERE drank_at >= ? AND drank_at <= ?',
-        [startOfDay.getTime(), endOfDay.getTime()]
-      );
-      
-      return result?.total || 0;
-    } catch (error) {
-      console.error('Error getting daily total:', error);
-      return 0;
-    }
-  };
-
   const loadCurrentStreak = async () => {
     try {
-      const dailyGoal = await getDailyGoalForDate(new Date());
-      let streak = 0;
-      const today = new Date();
-      
-      // Check backwards from today until we find a day that didn't meet the goal
-      for (let i = 0; i < 365; i++) { // Max 365 days to prevent infinite loop
-        const checkDate = new Date(today);
-        checkDate.setDate(today.getDate() - i);
-        
-        const dailyTotal = await getDailyTotal(checkDate);
-        const goalForDate = await getDailyGoalForDate(checkDate);
-        
-        if (dailyTotal >= goalForDate) {
-          streak++;
-        } else {
-          break; // Streak broken
-        }
-      }
-      
+      const streak = await calculateCurrentStreak(db);
       setCurrentStreak(streak);
     } catch (error) {
       console.error('Error calculating current streak:', error);
@@ -282,20 +242,20 @@ export default function HistoryScreen() {
       const today = new Date();
       let totalPercentage = 0;
       let totalDays = 0;
-      
+
       // Check the last 7 days and calculate average percentage
       for (let i = 0; i < 7; i++) {
         const checkDate = new Date(today);
         checkDate.setDate(today.getDate() - i);
-        
-        const dailyTotal = await getDailyTotal(checkDate);
-        const goalForDate = await getDailyGoalForDate(checkDate);
+
+        const dailyTotal = await getDailyTotal(db, checkDate);
+        const goalForDate = await getDailyGoalForDate(db, checkDate);
         const percentage = goalForDate > 0 ? Math.round((dailyTotal / goalForDate) * 100) : 0;
-        
+
         totalPercentage += percentage;
         totalDays++;
       }
-      
+
       const average = totalDays > 0 ? Math.round(totalPercentage / totalDays) : 0;
       setWeeklyAverage(average);
     } catch (error) {
